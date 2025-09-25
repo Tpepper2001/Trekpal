@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrekPal - Find Your Trekking Companions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .profile-section, .routes-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #5a67d8;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #5a67d8;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        }
+
+        .route-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .route-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .route-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .route-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .difficulty {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .difficulty.easy { background: #c6f6d5; color: #22543d; }
+        .difficulty.moderate { background: #feebc8; color: #c05621; }
+        .difficulty.hard { background: #fed7d7; color: #c53030; }
+
+        .route-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .route-detail {
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .route-detail strong {
+            display: block;
+            color: #5a67d8;
+            font-size: 1.1rem;
+        }
+
+        .route-detail span {
+            font-size: 0.9rem;
+            color: #718096;
+        }
+
+        .trekker-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .trekker-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .my-routes {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .route-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .status-open { background: #48bb78; }
+        .status-full { background: #ed8936; }
+        .status-closed { background: #e53e3e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏔️ TrekPal</h1>
+            <p>Find your perfect trekking companions and explore together</p>
+        </div>
+
+        <div class="main-content">
+            <div class="profile-section">
+                <h2 class="section-title">Your Profile</h2>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" placeholder="Enter your full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience">Trekking Experience</label>
+                        <select id="experience">
+                            <option value="">Select your experience level</option>
+                            <option value="beginner">Beginner (0-5 treks)</option>
+                            <option value="intermediate">Intermediate (5-15 treks)</option>
+                            <option value="advanced">Advanced (15+ treks)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Your Location</label>
+                        <input type="text" id="location" placeholder="City, State">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bio">Bio</label>
+                        <textarea id="bio" rows="3" placeholder="Tell others about yourself and your trekking interests..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">Update Profile</button>
+                </form>
+
+                <div style="margin-top: 30px;">
+                    <h3 class="section-title">Create New Route</h3>
+                    <form id="routeForm">
+                        <div class="form-group">
+                            <label for="routeName">Route Name</label>
+                            <input type="text" id="routeName" placeholder="e.g., Annapurna Base Camp">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="routeDifficulty">Difficulty</label>
+                            <select id="routeDifficulty">
+                                <option value="easy">Easy</option>
+                                <option value="moderate">Moderate</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="duration">Duration (days)</label>
+                            <input type="number" id="duration" min="1" max="30">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="maxTrekkers">Max Trekkers</label>
+                            <input type="number" id="maxTrekkers" min="2" max="10" value="4">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-secondary">Create Route</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="routes-section">
+                <h2 class="section-title">Available Routes</h2>
+                <div id="routesList">
+                    <!-- Routes will be dynamically populated -->
+                </div>
+            </div>
+        </div>
+
+        <div class="my-routes">
+            <h2 class="section-title">My Routes</h2>
+            <div id="myRoutesList">
+                <div class="empty-state">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🎒</div>
+                    <p>You haven't created any routes yet. Create your first route above!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        let routes = [
+            {
+                id: 1,
+                name: "Everest Base Camp",
+                difficulty: "hard",
+                duration: 14,
+                startDate: "2025-10-15",
+                maxTrekkers: 6,
+                currentTrekkers: 4,
+                creator: "Sarah Johnson",
+                location: "Nepal",
+                altitude: "5,364m",
+                trekkers: ["Sarah J.", "Mike R.", "Lisa M.", "John D."]
+            },
+            {
+                id: 2,
+                name: "Annapurna Circuit",
+                difficulty: "moderate",
+                duration: 12,
+                startDate: "2025-11-01",
+                maxTrekkers: 5,
+                currentTrekkers: 3,
+                creator: "David Kim",
+                location: "Nepal",
+                altitude: "5,416m",
+                trekkers: ["David K.", "Emma W.", "Alex P."]
+            },
+            {
+                id: 3,
+                name: "Mount Whitney",
+                difficulty: "moderate",
+                duration: 2,
+                startDate: "2025-10-28",
+                maxTrekkers: 4,
+                currentTrekkers: 2,
+                creator: "Maria Garcia",
+                location: "California, USA",
+                altitude: "4,421m",
+                trekkers: ["Maria G.", "Tom B."]
+            }
+        ];
+
+        let myRoutes = [];
+        let currentUser = { name: "", experience: "", location: "", bio: "" };
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            renderRoutes();
+            renderMyRoutes();
+            
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('startDate').min = today;
+        });
+
+        // Profile form submission
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            currentUser.name = document.getElementById('name').value;
+            currentUser.experience = document.getElementById('experience').value;
+            currentUser.location = document.getElementById('location').value;
+            currentUser.bio = document.getElementById('bio').value;
+            
+            alert('Profile updated successfully!');
+        });
+
+        // Route form submission
+        document.getElementById('routeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!currentUser.name) {
+                alert('Please fill out your profile first!');
+                return;
+            }
+            
+            const newRoute = {
+                id: Date.now(),
+                name: document.getElementById('routeName').value,
+                difficulty: document.getElementById('routeDifficulty').value,
+                duration: parseInt(document.getElementById('duration').value),
+                startDate: document.getElementById('startDate').value,
+                maxTrekkers: parseInt(document.getElementById('maxTrekkers').value),
+                currentTrekkers: 1,
+                creator: currentUser.name,
+                location: "Custom Route",
+                altitude: "TBD",
+                trekkers: [currentUser.name]
+            };
+            
+            myRoutes.push(newRoute);
+            routes.push(newRoute);
+            
+            // Reset form
+            document.getElementById('routeForm').reset();
+            
+            renderRoutes();
+            renderMyRoutes();
+            
+            alert('Route created successfully!');
+        });
+
+        function renderRoutes() {
+            const routesList = document.getElementById('routesList');
+            
+            if (routes.length === 0) {
+                routesList.innerHTML = '<div class="empty-state"><p>No routes available at the moment.</p></div>';
+                return;
+            }
+            
+            routesList.innerHTML = routes.map(route => {
+                const status = route.currentTrekkers >= route.maxTrekkers ? 'full' : 'open';
+                const statusText = route.currentTrekkers >= route.maxTrekkers ? 'Full' : 'Open';
+                
+                return `
+                    <div class="route-card">
+                        <div class="route-header">
+                            <div class="route-name">${route.name}</div>
+                            <div class="difficulty ${route.difficulty}">${route.difficulty}</div>
+                        </div>
+                        
+                        <div class="route-details">
+                            <div class="route-detail">
+                                <strong>${route.duration}</strong>
+                                <span>Days</span>
+                            </div>
+                            <div class="route-detail">
+                                <strong>${route.altitude}</strong>
+                                <span>Max Altitude</span>
+                            </div>
+                            <div class="route-detail">
+                                <strong>${route.currentTrekkers}/${route.maxTrekkers}</strong>
+                                <span>Trekkers</span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <strong>Start Date:</strong> ${new Date(route.startDate).toLocaleDateString()}<br>
+                            <strong>Created by:</strong> ${route.creator}<br>
+                            <strong>Location:</strong> ${route.location}
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <span class="status-indicator status-${status}"></span>
+                            <strong>Status:</strong> ${statusText}
+                        </div>
+                        
+                        <div class="trekker-list">
+                            ${route.trekkers.map(trekker => `<span class="trekker-badge">${trekker}</span>`).join('')}
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            ${route.currentTrekkers < route.maxTrekkers && !route.trekkers.includes(currentUser.name) ? 
+                                `<button class="btn" onclick="joinRoute(${route.id})">Join Route</button>` : 
+                                route.trekkers.includes(currentUser.name) ? 
+                                `<button class="btn" onclick="leaveRoute(${route.id})" style="background: #e53e3e;">Leave Route</button>` :
+                                `<button class="btn" disabled style="opacity: 0.5;">Route Full</button>`
+                            }
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderMyRoutes() {
+            const myRoutesList = document.getElementById('myRoutesList');
+            
+            if (myRoutes.length === 0) {
+                myRoutesList.innerHTML = `
+                    <div class="empty-state">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🎒</div>
+                        <p>You haven't created any routes yet. Create your first route above!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            myRoutesList.innerHTML = myRoutes.map(route => `
+                <div class="route-card">
+                    <div class="route-header">
+                        <div class="route-name">${route.name}</div>
+                        <div class="difficulty ${route.difficulty}">${route.difficulty}</div>
+                    </div>
+                    
+                    <div class="route-details">
+                        <div class="route-detail">
+                            <strong>${route.duration}</strong>
+                            <span>Days</span>
+                        </div>
+                        <div class="route-detail">
+                            <strong>${route.currentTrekkers}/${route.maxTrekkers}</strong>
+                            <span>Trekkers</span>
+                        </div>
+                        <div class="route-detail">
+                            <strong>${new Date(route.startDate).toLocaleDateString()}</strong>
+                            <span>Start Date</span>
+                        </div>
+                    </div>
+                    
+                    <div class="trekker-list">
+                        ${route.trekkers.map(trekker => `<span class="trekker-badge">${trekker}</span>`).join('')}
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <button class="btn" onclick="deleteRoute(${route.id})" style="background: #e53e3e;">Delete Route</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function joinRoute(routeId) {
+            if (!currentUser.name) {
+                alert('Please fill out your profile first!');
+                return;
+            }
+            
+            const route = routes.find(r => r.id === routeId);
+            if (route && route.currentTrekkers < route.maxTrekkers) {
+                route.currentTrekkers++;
+                route.trekkers.push(currentUser.name);
+                renderRoutes();
+                alert(`You've successfully joined the ${route.name} trek!`);
+            }
+        }
+
+        function leaveRoute(routeId) {
+            const route = routes.find(r => r.id === routeId);
+            if (route) {
+                const index = route.trekkers.indexOf(currentUser.name);
+                if (index > -1) {
+                    route.trekkers.splice(index, 1);
+                    route.currentTrekkers--;
+                    renderRoutes();
+                    alert(`You've left the ${route.name} trek.`);
+                }
+            }
+        }
+
+        function deleteRoute(routeId) {
+            if (confirm('Are you sure you want to delete this route?')) {
+                myRoutes = myRoutes.filter(r => r.id !== routeId);
+                routes = routes.filter(r => r.id !== routeId);
+                renderRoutes();
+                renderMyRoutes();
+            }
+        }
+    </script>
+</body>
+</html>
