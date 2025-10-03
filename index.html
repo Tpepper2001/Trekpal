@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrekPal - Find Your Trekking Companions</title>
+    <title>Info Med - Kwara State Library</title>
     <style>
         * {
             margin: 0;
@@ -13,568 +13,788 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
+        }
+
+        .header {
+            background: white;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-text h1 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .header-text p {
+            color: #666;
+            font-size: 0.9rem;
         }
 
         .container {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
 
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-            padding: 20px 0;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .profile-section, .routes-section {
+        .welcome-card {
             background: white;
-            padding: 25px;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
-        .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #5a67d8;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 10px;
+        .welcome-card h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
         }
 
-        .form-group {
-            margin-bottom: 15px;
+        .search-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #4a5568;
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: border-color 0.3s ease;
+        .search-box input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
         }
 
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+        .search-box input:focus {
             outline: none;
-            border-color: #5a67d8;
+            border-color: #667eea;
         }
 
-        .btn {
-            padding: 12px 24px;
+        .search-box button {
+            padding: 1rem 2rem;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .search-box button:hover {
+            transform: translateY(-2px);
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            margin-bottom: 1rem;
+        }
+
+        .category-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .info-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .info-section h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .info-section h3 {
+            color: #764ba2;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .info-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .emergency-banner {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .emergency-banner h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .emergency-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #666;
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-bottom: 1rem;
+            text-decoration: none;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .back-button:hover {
+            background: #555;
         }
 
-        .btn-secondary {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-        }
-
-        .route-card {
-            background: #f8fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .route-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .route-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .route-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #2d3748;
-        }
-
-        .difficulty {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .difficulty.easy { background: #c6f6d5; color: #22543d; }
-        .difficulty.moderate { background: #feebc8; color: #c05621; }
-        .difficulty.hard { background: #fed7d7; color: #c53030; }
-
-        .route-details {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .route-detail {
-            text-align: center;
-            padding: 10px;
+        .blog-section {
             background: white;
-            border-radius: 8px;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: none;
         }
 
-        .route-detail strong {
+        .blog-section.active {
             display: block;
-            color: #5a67d8;
-            font-size: 1.1rem;
+            animation: fadeIn 0.5s;
         }
 
-        .route-detail span {
+        .blog-section h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .blog-card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .blog-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-card p {
+            color: #666;
             font-size: 0.9rem;
-            color: #718096;
+            margin-bottom: 1rem;
         }
 
-        .trekker-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .trekker-badge {
+        .blog-card .read-more {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s;
         }
 
-        .my-routes {
+        .blog-card .read-more:hover {
+            transform: translateY(-2px);
+        }
+
+        .footer {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .empty-state {
+            padding: 2rem;
             text-align: center;
-            padding: 40px;
-            color: #718096;
+            margin-top: 2rem;
         }
 
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            opacity: 0.5;
+        .footer p {
+            color: #666;
         }
 
         @media (max-width: 768px) {
-            .main-content {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .categories {
                 grid-template-columns: 1fr;
             }
-            
-            .route-details {
+
+            .blog-posts {
                 grid-template-columns: 1fr;
             }
         }
-
-        .status-indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 5px;
-        }
-
-        .status-open { background: #48bb78; }
-        .status-full { background: #ed8936; }
-        .status-closed { background: #e53e3e; }
     </style>
 </head>
 <body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">IM</div>
+            <div class="header-text">
+                <h1>Info Med</h1>
+                <p>Kwara State Library - Bridging Medical Information Gaps</p>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
-        <div class="header">
-            <h1>🏔️ TrekPal</h1>
-            <p>Find your perfect trekking companions and explore together</p>
+        <div class="emergency-banner">
+            <h3>⚠️ Medical Emergency?</h3>
+            <div class="emergency-number">Call 112 or 767</div>
+            <p>For immediate medical assistance in Kwara State</p>
         </div>
 
-        <div class="main-content">
-            <div class="profile-section">
-                <h2 class="section-title">Your Profile</h2>
-                <form id="profileForm">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" placeholder="Enter your full name">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="experience">Trekking Experience</label>
-                        <select id="experience">
-                            <option value="">Select your experience level</option>
-                            <option value="beginner">Beginner (0-5 treks)</option>
-                            <option value="intermediate">Intermediate (5-15 treks)</option>
-                            <option value="advanced">Advanced (15+ treks)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="location">Your Location</label>
-                        <input type="text" id="location" placeholder="City, State">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="bio">Bio</label>
-                        <textarea id="bio" rows="3" placeholder="Tell others about yourself and your trekking interests..."></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn">Update Profile</button>
-                </form>
+        <div id="mainContent">
+            <div class="welcome-card">
+                <h2>Welcome to Info Med</h2>
+                <p>Your trusted source for reliable medical information in Kwara State. We provide evidence-based health information to help you make informed decisions about your health and wellbeing. Browse by category below or use the search function to find specific health topics.</p>
+            </div>
 
-                <div style="margin-top: 30px;">
-                    <h3 class="section-title">Create New Route</h3>
-                    <form id="routeForm">
-                        <div class="form-group">
-                            <label for="routeName">Route Name</label>
-                            <input type="text" id="routeName" placeholder="e.g., Annapurna Base Camp">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="routeDifficulty">Difficulty</label>
-                            <select id="routeDifficulty">
-                                <option value="easy">Easy</option>
-                                <option value="moderate">Moderate</option>
-                                <option value="hard">Hard</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="duration">Duration (days)</label>
-                            <input type="number" id="duration" min="1" max="30">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="startDate">Start Date</label>
-                            <input type="date" id="startDate">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="maxTrekkers">Max Trekkers</label>
-                            <input type="number" id="maxTrekkers" min="2" max="10" value="4">
-                        </div>
-                        
-                        <button type="submit" class="btn btn-secondary">Create Route</button>
-                    </form>
+            <div class="search-container">
+                <h3 style="margin-bottom: 1rem; color: #667eea;">Search Health Topics</h3>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search for diseases, symptoms, treatments, blogs...">
+                    <button onclick="searchHealth()">🔍 Search</button>
                 </div>
             </div>
 
-            <div class="routes-section">
-                <h2 class="section-title">Available Routes</h2>
-                <div id="routesList">
-                    <!-- Routes will be dynamically populated -->
+            <h2 style="color: white; margin-bottom: 1rem; text-align: center;">Health Information Categories</h2>
+            
+            <div class="categories">
+                <div class="category-card" onclick="showCategory('diseases')">
+                    <div class="category-icon">🦠</div>
+                    <h3>Common Diseases</h3>
+                    <p>Learn about prevention, symptoms, and treatment of common diseases in Nigeria</p>
+                </div>
+
+                <div class="category-card" onclick="showCategory('maternal')">
+                    <div class="category-icon">👶</div>
+                    <h3>Maternal & Child Health</h3>
+                    <p>Essential information for mothers and child care</p>
+                </div>
+
+                <div class="category-card" onclick="showCategory('nutrition')">
+                    <div class="category-icon">🥗</div>
+                    <h3>Nutrition & Wellness</h3>
+                    <p>Healthy eating guidelines and lifestyle tips</p>
+                </div>
+
+                <div class="category-card" onclick="showCategory('vaccination')">
+                    <div class="category-icon">💉</div>
+                    <h3>Vaccination Schedule</h3>
+                    <p>Immunization information for all ages</p>
+                </div>
+
+                <div class="category-card" onclick="showCategory('mental')">
+                    <div class="category-icon">🧠</div>
+                    <h3>Mental Health</h3>
+                    <p>Understanding and supporting mental wellbeing</p>
+                </div>
+
+                <div class="category-card" onclick="showCategory('firstaid')">
+                    <div class="category-icon">🏥</div>
+                    <h3>First Aid</h3>
+                    <p>Emergency response and basic first aid techniques</p>
+                </div>
+
+                <div class="category-card" onclick="showCategory('blog')">
+                    <div class="category-icon">📝</div>
+                    <h3>Health Blog</h3>
+                    <p>Latest articles and tips on health and wellness</p>
                 </div>
             </div>
         </div>
 
-        <div class="my-routes">
-            <h2 class="section-title">My Routes</h2>
-            <div id="myRoutesList">
-                <div class="empty-state">
-                    <div style="font-size: 3rem; margin-bottom: 15px;">🎒</div>
-                    <p>You haven't created any routes yet. Create your first route above!</p>
+        <!-- Disease Information Section -->
+        <div id="diseases" class="info-section">
+            <button class="back-button" onclick="goBack()">← Back to Categories</button>
+            <h2>Common Diseases in Nigeria</h2>
+            
+            <h3>Malaria</h3>
+            <p><strong>What is it?</strong> A life-threatening disease caused by parasites transmitted through mosquito bites.</p>
+            <p><strong>Symptoms:</strong></p>
+            <ul>
+                <li>High fever and chills</li>
+                <li>Severe headache</li>
+                <li>Body aches and fatigue</li>
+                <li>Nausea and vomiting</li>
+            </ul>
+            <p><strong>Prevention:</strong></p>
+            <ul>
+                <li>Sleep under insecticide-treated nets</li>
+                <li>Use mosquito repellents</li>
+                <li>Keep environment clean and drain stagnant water</li>
+                <li>Take antimalarial drugs as prescribed</li>
+            </ul>
+
+            <h3>Typhoid Fever</h3>
+            <p><strong>What is it?</strong> A bacterial infection spread through contaminated food and water.</p>
+            <p><strong>Symptoms:</strong></p>
+            <ul>
+                <li>Prolonged high fever</li>
+                <li>Weakness and stomach pain</li>
+                <li>Headache and loss of appetite</li>
+                <li>Constipation or diarrhea</li>
+            </ul>
+            <p><strong>Prevention:</strong></p>
+            <ul>
+                <li>Drink only clean, treated water</li>
+                <li>Wash hands regularly with soap</li>
+                <li>Eat properly cooked food</li>
+                <li>Get typhoid vaccination</li>
+            </ul>
+
+            <h3>Hypertension (High Blood Pressure)</h3>
+            <p><strong>What is it?</strong> A condition where blood pressure is consistently too high.</p>
+            <p><strong>Risk Factors:</strong></p>
+            <ul>
+                <li>Excessive salt intake</li>
+                <li>Obesity and lack of exercise</li>
+                <li>Stress and family history</li>
+                <li>Smoking and excessive alcohol</li>
+            </ul>
+            <p><strong>Management:</strong></p>
+            <ul>
+                <li>Regular blood pressure monitoring</li>
+                <li>Reduce salt intake</li>
+                <li>Exercise regularly</li>
+                <li>Take prescribed medications</li>
+                <li>Maintain healthy weight</li>
+            </ul>
+        </div>
+
+        <!-- Maternal & Child Health Section -->
+        <div id="maternal" class="info-section">
+            <button class="back-button" onclick="goBack()">← Back to Categories</button>
+            <h2>Maternal & Child Health</h2>
+            
+            <h3>Antenatal Care</h3>
+            <p>Pregnant women should attend at least 8 antenatal visits:</p>
+            <ul>
+                <li>First visit: Before 12 weeks of pregnancy</li>
+                <li>Regular check-ups throughout pregnancy</li>
+                <li>Blood tests and ultrasound scans</li>
+                <li>Nutrition counseling and supplements</li>
+                <li>Tetanus vaccination</li>
+            </ul>
+
+            <h3>Breastfeeding</h3>
+            <p><strong>Benefits:</strong></p>
+            <ul>
+                <li>Provides complete nutrition for baby</li>
+                <li>Protects against infections</li>
+                <li>Promotes bonding between mother and child</li>
+                <li>Reduces risk of childhood diseases</li>
+            </ul>
+            <p><strong>Recommendations:</strong></p>
+            <ul>
+                <li>Exclusive breastfeeding for first 6 months</li>
+                <li>Continue breastfeeding up to 2 years and beyond</li>
+                <li>Introduce complementary foods after 6 months</li>
+            </ul>
+
+            <h3>Child Development Milestones</h3>
+            <p><strong>0-6 months:</strong> Smiles, rolls over, reaches for objects</p>
+            <p><strong>6-12 months:</strong> Sits without support, crawls, says first words</p>
+            <p><strong>1-2 years:</strong> Walks independently, speaks short sentences</p>
+            <p><strong>2-3 years:</strong> Runs, climbs, speaks in sentences</p>
+            <p style="margin-top: 1rem;"><strong>Note:</strong> If your child is not meeting milestones, consult a healthcare provider.</p>
+        </div>
+
+        <!-- Nutrition Section -->
+        <div id="nutrition" class="info-section">
+            <button class="back-button" onclick="goBack()">← Back to Categories</button>
+            <h2>Nutrition & Wellness</h2>
+            
+            <h3>Balanced Diet</h3>
+            <p>A healthy diet should include:</p>
+            <ul>
+                <li><strong>Carbohydrates:</strong> Rice, yam, cassava, bread, plantain</li>
+                <li><strong>Proteins:</strong> Beans, fish, meat, eggs, milk</li>
+                <li><strong>Vitamins & Minerals:</strong> Fruits and vegetables (especially leafy greens)</li>
+                <li><strong>Water:</strong> At least 8 glasses daily</li>
+            </ul>
+
+            <h3>Foods to Limit</h3>
+            <ul>
+                <li>Excessive salt and sugary drinks</li>
+                <li>Fried and fatty foods</li>
+                <li>Processed foods with preservatives</li>
+                <li>Excessive alcohol</li>
+            </ul>
+
+            <h3>Healthy Living Tips</h3>
+            <ul>
+                <li>Exercise at least 30 minutes daily</li>
+                <li>Get 7-8 hours of sleep</li>
+                <li>Manage stress through relaxation</li>
+                <li>Regular medical check-ups</li>
+                <li>Avoid tobacco and limit alcohol</li>
+            </ul>
+        </div>
+
+        <!-- Vaccination Section -->
+        <div id="vaccination" class="info-section">
+            <button class="back-button" onclick="goBack()">← Back to Categories</button>
+            <h2>Vaccination Schedule</h2>
+            
+            <h3>Childhood Immunization</h3>
+            <p><strong>At Birth:</strong></p>
+            <ul>
+                <li>BCG (Tuberculosis)</li>
+                <li>Hepatitis B (1st dose)</li>
+                <li>Oral Polio Vaccine</li>
+            </ul>
+
+            <p><strong>6 Weeks:</strong></p>
+            <ul>
+                <li>Pentavalent (DPT, Hepatitis B, Hib) - 1st dose</li>
+                <li>Oral Polio Vaccine - 1st dose</li>
+                <li>Pneumococcal vaccine - 1st dose</li>
+            </ul>
+
+            <p><strong>10 Weeks:</strong></p>
+            <ul>
+                <li>Pentavalent - 2nd dose</li>
+                <li>Oral Polio Vaccine - 2nd dose</li>
+                <li>Pneumococcal vaccine - 2nd dose</li>
+            </ul>
+
+            <p><strong>14 Weeks:</strong></p>
+            <ul>
+                <li>Pentavalent - 3rd dose</li>
+                <li>Oral Polio Vaccine - 3rd dose</li>
+                <li>Pneumococcal vaccine - 3rd dose</li>
+            </ul>
+
+            <p><strong>9 Months:</strong></p>
+            <ul>
+                <li>Measles vaccine</li>
+                <li>Yellow Fever vaccine</li>
+            </ul>
+
+            <h3>Adult Vaccinations</h3>
+            <ul>
+                <li>Tetanus booster every 10 years</li>
+                <li>Hepatitis B (if not vaccinated)</li>
+                <li>Influenza (annual for elderly)</li>
+                <li>COVID-19 vaccination</li>
+            </ul>
+        </div>
+
+        <!-- Mental Health Section -->
+        <div id="mental" class="info-section">
+            <button class="back-button" onclick="goBack()">← Back to Categories</button>
+            <h2>Mental Health</h2>
+            
+            <h3>Understanding Mental Health</h3>
+            <p>Mental health is just as important as physical health. It affects how we think, feel, and act.</p>
+
+            <h3>Common Mental Health Conditions</h3>
+            <p><strong>Depression:</strong></p>
+            <ul>
+                <li>Persistent sadness and loss of interest</li>
+                <li>Changes in sleep and appetite</li>
+                <li>Difficulty concentrating</li>
+                <li>Feelings of hopelessness</li>
+            </ul>
+
+            <p><strong>Anxiety:</strong></p>
+            <ul>
+                <li>Excessive worry and fear</li>
+                <li>Restlessness and tension</li>
+                <li>Rapid heartbeat</li>
+                <li>Difficulty sleeping</li>
+            </ul>
+
+            <h3>Maintaining Good Mental Health</h3>
+            <ul>
+                <li>Talk to friends and family</li>
+                <li>Exercise regularly</li>
+                <li>Get enough sleep</li>
+                <li>Eat healthy meals</li>
+                <li>Practice relaxation techniques</li>
+                <li>Seek professional help when needed</li>
+            </ul>
+
+            <h3>When to Seek Help</h3>
+            <p>Seek professional help if you experience:</p>
+            <ul>
+                <li>Prolonged sadness or anxiety</li>
+                <li>Difficulty functioning daily</li>
+                <li>Substance abuse problems</li>
+                <li>Thoughts of self-harm</li>
+            </ul>
+        </div>
+
+        <!-- First Aid Section -->
+        <div id="firstaid" class="info-section">
+            <button class="back-button" onclick="goBack()">← Back to Categories</button>
+            <h2>First Aid</h2>
+            
+            <h3>Basic First Aid Kit</h3>
+            <p>Every home should have:</p>
+            <ul>
+                <li>Sterile bandages and gauze</li>
+                <li>Adhesive tape and plasters</li>
+                <li>Antiseptic solution</li>
+                <li>Pain relievers (paracetamol)</li>
+                <li>Thermometer</li>
+                <li>Scissors and tweezers</li>
+                <li>Disposable gloves</li>
+            </ul>
+
+            <h3>Common Emergencies</h3>
+            
+            <p><strong>Cuts and Wounds:</strong></p>
+            <ul>
+                <li>Wash hands before treating</li>
+                <li>Clean wound with clean water</li>
+                <li>Apply pressure to stop bleeding</li>
+                <li>Cover with sterile bandage</li>
+                <li>Seek medical help for deep cuts</li>
+            </ul>
+
+            <p><strong>Burns:</strong></p>
+            <ul>
+                <li>Cool the burn with running water (10-20 minutes)</li>
+                <li>Do not apply ice directly</li>
+                <li>Cover with clean cloth</li>
+                <li>Do not burst blisters</li>
+                <li>Seek medical help for serious burns</li>
+            </ul>
+
+            <p><strong>Choking:</strong></p>
+            <ul>
+                <li>Encourage coughing if person can breathe</li>
+                <li>Perform back blows (5 times)</li>
+                <li>Perform abdominal thrusts if needed</li>
+                <li>Call for emergency help</li>
+            </ul>
+
+            <p><strong>Fainting:</strong></p>
+            <ul>
+                <li>Lay person flat on back</li>
+                <li>Elevate legs above heart level</li>
+                <li>Loosen tight clothing</li>
+                <li>Check breathing and pulse</li>
+                <li>Seek medical help if not recovering</li>
+            </ul>
+        </div>
+
+        <!-- Blog Post Section -->
+        <div id="blog" class="blog-section">
+            <button class="back-button" onclick="goBack()">← Back to Categories</button>
+            <h2>Health Blog</h2>
+            <div class="blog-posts">
+                <div class="blog-card">
+                    <h3>Managing Malaria in the Rainy Season</h3>
+                    <p>Learn how to protect your family from malaria during the rainy season with practical tips on prevention and early treatment.</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+                <div class="blog-card">
+                    <h3>Nutrition Tips for Pregnant Women</h3>
+                    <p>Discover the essential nutrients needed for a healthy pregnancy and how to incorporate them into your daily diet.</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+                <div class="blog-card">
+                    <h3>Coping with Stress: Simple Techniques</h3>
+                    <p>Explore effective strategies to manage stress and improve your mental wellbeing in daily life.</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+                <div class="blog-card">
+                    <h3>The Importance of Childhood Vaccinations</h3>
+                    <p>Understand why timely vaccinations are critical for your child's health and how they protect against serious diseases.</p>
+                    <a href="#" class="read-more">Read More</a>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="footer">
+        <p><strong>Info Med</strong> - A Kwara State Library Initiative</p>
+        <p>For medical emergencies, always call 112 or 767 or visit the nearest health facility</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">© 2023 Kwara State Government. All rights reserved.</p>
+    </div>
+
     <script>
-        // Sample data
-        let routes = [
-            {
-                id: 1,
-                name: "Everest Base Camp",
-                difficulty: "hard",
-                duration: 14,
-                startDate: "2025-10-15",
-                maxTrekkers: 6,
-                currentTrekkers: 4,
-                creator: "Sarah Johnson",
-                location: "Nepal",
-                altitude: "5,364m",
-                trekkers: ["Sarah J.", "Mike R.", "Lisa M.", "John D."]
-            },
-            {
-                id: 2,
-                name: "Annapurna Circuit",
-                difficulty: "moderate",
-                duration: 12,
-                startDate: "2025-11-01",
-                maxTrekkers: 5,
-                currentTrekkers: 3,
-                creator: "David Kim",
-                location: "Nepal",
-                altitude: "5,416m",
-                trekkers: ["David K.", "Emma W.", "Alex P."]
-            },
-            {
-                id: 3,
-                name: "Mount Whitney",
-                difficulty: "moderate",
-                duration: 2,
-                startDate: "2025-10-28",
-                maxTrekkers: 4,
-                currentTrekkers: 2,
-                creator: "Maria Garcia",
-                location: "California, USA",
-                altitude: "4,421m",
-                trekkers: ["Maria G.", "Tom B."]
-            }
-        ];
+        function showCategory(categoryId) {
+            document.getElementById('mainContent').style.display = 'none';
+            const sections = document.querySelectorAll('.info-section, .blog-section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(categoryId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-        let myRoutes = [];
-        let currentUser = { name: "", experience: "", location: "", bio: "" };
+        function goBack() {
+            document.getElementById('mainContent').style.display = 'block';
+            const sections = document.querySelectorAll('.info-section, .blog-section');
+            sections.forEach(section => section.classList.remove('active'));
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            renderRoutes();
-            renderMyRoutes();
-            
-            // Set minimum date to today
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('startDate').min = today;
-        });
-
-        // Profile form submission
-        document.getElementById('profileForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            currentUser.name = document.getElementById('name').value;
-            currentUser.experience = document.getElementById('experience').value;
-            currentUser.location = document.getElementById('location').value;
-            currentUser.bio = document.getElementById('bio').value;
-            
-            alert('Profile updated successfully!');
-        });
-
-        // Route form submission
-        document.getElementById('routeForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (!currentUser.name) {
-                alert('Please fill out your profile first!');
+        function searchHealth() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            if (!query) {
+                alert('Please enter a search term');
                 return;
             }
-            
-            const newRoute = {
-                id: Date.now(),
-                name: document.getElementById('routeName').value,
-                difficulty: document.getElementById('routeDifficulty').value,
-                duration: parseInt(document.getElementById('duration').value),
-                startDate: document.getElementById('startDate').value,
-                maxTrekkers: parseInt(document.getElementById('maxTrekkers').value),
-                currentTrekkers: 1,
-                creator: currentUser.name,
-                location: "Custom Route",
-                altitude: "TBD",
-                trekkers: [currentUser.name]
+
+            const keywords = {
+                'malaria': 'diseases',
+                'typhoid': 'diseases',
+                'fever': 'diseases',
+                'hypertension': 'diseases',
+                'blood pressure': 'diseases',
+                'pregnancy': 'maternal',
+                'baby': 'maternal',
+                'child': 'maternal',
+                'breastfeeding': 'maternal',
+                'food': 'nutrition',
+                'diet': 'nutrition',
+                'nutrition': 'nutrition',
+                'vaccine': 'vaccination',
+                'immunization': 'vaccination',
+                'depression': 'mental',
+                'anxiety': 'mental',
+                'stress': 'mental',
+                'mental': 'mental',
+                'first aid': 'firstaid',
+                'emergency': 'firstaid',
+                'wound': 'firstaid',
+                'burn': 'firstaid',
+                'blog': 'blog',
+                'article': 'blog',
+                'health tips': 'blog'
             };
-            
-            myRoutes.push(newRoute);
-            routes.push(newRoute);
-            
-            // Reset form
-            document.getElementById('routeForm').reset();
-            
-            renderRoutes();
-            renderMyRoutes();
-            
-            alert('Route created successfully!');
-        });
 
-        function renderRoutes() {
-            const routesList = document.getElementById('routesList');
-            
-            if (routes.length === 0) {
-                routesList.innerHTML = '<div class="empty-state"><p>No routes available at the moment.</p></div>';
-                return;
-            }
-            
-            routesList.innerHTML = routes.map(route => {
-                const status = route.currentTrekkers >= route.maxTrekkers ? 'full' : 'open';
-                const statusText = route.currentTrekkers >= route.maxTrekkers ? 'Full' : 'Open';
-                
-                return `
-                    <div class="route-card">
-                        <div class="route-header">
-                            <div class="route-name">${route.name}</div>
-                            <div class="difficulty ${route.difficulty}">${route.difficulty}</div>
-                        </div>
-                        
-                        <div class="route-details">
-                            <div class="route-detail">
-                                <strong>${route.duration}</strong>
-                                <span>Days</span>
-                            </div>
-                            <div class="route-detail">
-                                <strong>${route.altitude}</strong>
-                                <span>Max Altitude</span>
-                            </div>
-                            <div class="route-detail">
-                                <strong>${route.currentTrekkers}/${route.maxTrekkers}</strong>
-                                <span>Trekkers</span>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-bottom: 15px;">
-                            <strong>Start Date:</strong> ${new Date(route.startDate).toLocaleDateString()}<br>
-                            <strong>Created by:</strong> ${route.creator}<br>
-                            <strong>Location:</strong> ${route.location}
-                        </div>
-                        
-                        <div style="margin-bottom: 15px;">
-                            <span class="status-indicator status-${status}"></span>
-                            <strong>Status:</strong> ${statusText}
-                        </div>
-                        
-                        <div class="trekker-list">
-                            ${route.trekkers.map(trekker => `<span class="trekker-badge">${trekker}</span>`).join('')}
-                        </div>
-                        
-                        <div style="margin-top: 15px;">
-                            ${route.currentTrekkers < route.maxTrekkers && !route.trekkers.includes(currentUser.name) ? 
-                                `<button class="btn" onclick="joinRoute(${route.id})">Join Route</button>` : 
-                                route.trekkers.includes(currentUser.name) ? 
-                                `<button class="btn" onclick="leaveRoute(${route.id})" style="background: #e53e3e;">Leave Route</button>` :
-                                `<button class="btn" disabled style="opacity: 0.5;">Route Full</button>`
-                            }
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function renderMyRoutes() {
-            const myRoutesList = document.getElementById('myRoutesList');
-            
-            if (myRoutes.length === 0) {
-                myRoutesList.innerHTML = `
-                    <div class="empty-state">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🎒</div>
-                        <p>You haven't created any routes yet. Create your first route above!</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            myRoutesList.innerHTML = myRoutes.map(route => `
-                <div class="route-card">
-                    <div class="route-header">
-                        <div class="route-name">${route.name}</div>
-                        <div class="difficulty ${route.difficulty}">${route.difficulty}</div>
-                    </div>
-                    
-                    <div class="route-details">
-                        <div class="route-detail">
-                            <strong>${route.duration}</strong>
-                            <span>Days</span>
-                        </div>
-                        <div class="route-detail">
-                            <strong>${route.currentTrekkers}/${route.maxTrekkers}</strong>
-                            <span>Trekkers</span>
-                        </div>
-                        <div class="route-detail">
-                            <strong>${new Date(route.startDate).toLocaleDateString()}</strong>
-                            <span>Start Date</span>
-                        </div>
-                    </div>
-                    
-                    <div class="trekker-list">
-                        ${route.trekkers.map(trekker => `<span class="trekker-badge">${trekker}</span>`).join('')}
-                    </div>
-                    
-                    <div style="margin-top: 15px;">
-                        <button class="btn" onclick="deleteRoute(${route.id})" style="background: #e53e3e;">Delete Route</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function joinRoute(routeId) {
-            if (!currentUser.name) {
-                alert('Please fill out your profile first!');
-                return;
-            }
-            
-            const route = routes.find(r => r.id === routeId);
-            if (route && route.currentTrekkers < route.maxTrekkers) {
-                route.currentTrekkers++;
-                route.trekkers.push(currentUser.name);
-                renderRoutes();
-                alert(`You've successfully joined the ${route.name} trek!`);
-            }
-        }
-
-        function leaveRoute(routeId) {
-            const route = routes.find(r => r.id === routeId);
-            if (route) {
-                const index = route.trekkers.indexOf(currentUser.name);
-                if (index > -1) {
-                    route.trekkers.splice(index, 1);
-                    route.currentTrekkers--;
-                    renderRoutes();
-                    alert(`You've left the ${route.name} trek.`);
+            let found = false;
+            for (const keyword in keywords) {
+                if (query.includes(keyword)) {
+                    showCategory(keywords[keyword]);
+                    found = true;
+                    break;
                 }
             }
-        }
 
-        function deleteRoute(routeId) {
-            if (confirm('Are you sure you want to delete this route?')) {
-                myRoutes = myRoutes.filter(r => r.id !== routeId);
-                routes = routes.filter(r => r.id !== routeId);
-                renderRoutes();
-                renderMyRoutes();
+            if (!found) {
+                alert('No results found. Please try browsing our categories or refine your search term.');
             }
         }
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchHealth();
+            }
+        });
     </script>
 </body>
 </html>
